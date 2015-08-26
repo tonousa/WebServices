@@ -4,6 +4,7 @@
 
 @section scripts {
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/Home/Index.js"></script>
 }
 
 <div id="summaryDisplay" class="display">
@@ -30,29 +31,30 @@
     </div>
 </div>
 
-    <div id="addDisplay" class="display">
-        <h4>Add new reservation</h4>
-        @{
-            AjaxOptions addAjaxOpts = new AjaxOptions
-            {
-                // options here
-            };
-        }
-        @using (Ajax.BeginForm(addAjaxOpts))
+<div id="addDisplay" class="display">
+    <h4>Add new reservation</h4>
+    @{
+        AjaxOptions addAjaxOpts = new AjaxOptions
         {
-            @Html.Hidden("ReservationId", 0)
-            <p><label>Name: </label>@Html.Editor("ClientName")</p>
-            <p><label>Location: </label>@Html.Editor("Location")</p>
-            <button type="submit">Submit</button>
-        }
-    </div>
+            OnSuccess = "getData",
+            Url = "/api/reservation"
+        };
+    }
+    @using (Ajax.BeginForm(addAjaxOpts))
+    {
+        @Html.Hidden("ReservationId", 0)
+        <p><label>Name: </label>@Html.Editor("ClientName")</p>
+        <p><label>Location: </label>@Html.Editor("Location")</p>
+        <button type="submit">Submit</button>
+    }
+</div>
 
-    <div id="editDisplay" class="display">
-        <h4>Edit Reservation</h4>
-        <form id="editForm">
-            <input type="hidden" id="editReservationId" name="ReservationId" />
-            <p><label>Name: </label><input id="editClientName" name="ClientName" /></p>
-            <p><label>Location: </label><input id="editLocation" name="Location" /></p>
-        </form>
-        <button type="submit" id="submitEdit">Save</button>
-    </div>
+<div id="editDisplay" class="display">
+    <h4>Edit Reservation</h4>
+    <form id="editForm">
+        <input type="hidden" id="editReservationId" name="ReservationId" />
+        <p><label>Name: </label><input id="editClientName" name="ClientName" /></p>
+        <p><label>Location: </label><input id="editLocation" name="Location" /></p>
+    </form>
+    <button type="submit" id="submitEdit">Save</button>
+</div>
